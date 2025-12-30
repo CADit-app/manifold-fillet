@@ -175,5 +175,3 @@ export { extractEdges, selectEdges, edgeDirection, edgeInwardDirection, sampleEd
 export { filletWithManifold } from './fillet';
 export { pipeAlongPath, pipeAlongPathExtended } from './pipeAlongPath';
 export { buildWedge } from './wedgeBuilder';
-
-export { default } from './example'
