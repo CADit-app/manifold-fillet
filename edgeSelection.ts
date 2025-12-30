@@ -5,7 +5,7 @@
  * Angle-based selection: Find all edges sharper than a threshold angle
  */
 
-import { Manifold } from 'manifold-3d';
+import type { Manifold } from 'manifold-3d';
 
 /** Point-based edge selection - fillet edge nearest to a point */
 export interface PointEdgeSelection {
