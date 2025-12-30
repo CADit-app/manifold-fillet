@@ -1,0 +1,53 @@
+{
+  "name": "@cadit-app/manifold-fillet",
+  "version": "1.0.0",
+  "description": "Fillet and round operations for Manifold meshes",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./*": {
+      "import": "./dist/*.js",
+      "types": "./dist/*.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "bash -c 'output=$(tsc --noCheck 2>&1); echo \"$output\"; echo \"$output\" | grep -v \"error TS2742\" | grep -q \"error TS\" && exit 1 || exit 0'",
+    "dev": "tsup src/index.ts --format cjs,esm --dts --watch",
+    "lint": "eslint src",
+    "build:3mf": "manifold-cad index.ts output.3mf",
+    "build:glb": "manifold-cad index.ts output.glb"
+  },
+  "author": "CadIt",
+  "license": "cc-by-sa",
+  "keywords": [
+    "manifold",
+    "fillet",
+    "cad"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CADit-app/manifold-fillet"
+  },
+  "homepage": "https://github.com/CADit-app/manifold-fillet#readme",
+  "bugs": {
+    "url": "https://github.com/CADit-app/manifold-fillet/issues"
+  },
+  "dependencies": {},
+  "peerDependencies": {
+    "manifold-3d": "^2.1.0 || ^3.0.0"
+  },
+  "devDependencies": {
+    "manifold-3d": "^3.3.2",
+    "tsup": "^8.0.0",
+    "typescript": "^5.3.3"
+  },
+  "module": "dist/index.mjs",
+  "publishConfig": {
+    "access": "public"
+  }
+}

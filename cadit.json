@@ -1,0 +1,20 @@
+{
+  "entryPoint": "index.ts",
+  "name": "manifold-fillet",
+  "description": "A fillet/round library for Manifold meshes. Implements the \"brute force\" CSG approach from elalish/manifold issue #1411 Installation - npm install @cadit-app/brute-force-fillet manifold-3d",
+  "category": "other",
+  "license": {
+    "type": "cc-by-sa"
+  },
+  "images": [
+    {
+      "path": "images/fillet.webp",
+      "isPrimary": true
+    }
+  ],
+  "metadata": {
+    "createdAt": "2025-12-30T04:04:35.729Z",
+    "createdWith": "cadit-web",
+    "designId": "fTfp9wgcM6O1NNU"
+  }
+}
