@@ -11,7 +11,8 @@
  * 4. Subtract cutting tool from original → rounded edge
  */
 
-import type { Manifold, ManifoldToplevel } from 'manifold-3d';
+import type { Manifold } from 'manifold-3d';
+import type { ManifoldStatic } from './index';
 import { 
   EdgeSelection, 
   MeshEdge, 
@@ -31,12 +32,12 @@ export interface FilletOptions {
 /**
  * Apply fillet/round to selected edges of a Manifold.
  * 
- * @param manifold - The initialized Manifold WASM module
+ * @param Manifold - The Manifold class with static constructors
  * @param mf - The Manifold shape to fillet
  * @param options - Fillet options (radius, selection, segments)
  * @returns A new Manifold with filleted edges
  */
-export function filletWithManifold(manifold: ManifoldToplevel, mf: Manifold, options: FilletOptions): Manifold {
+export function filletWithManifold(Manifold: ManifoldStatic, mf: Manifold, options: FilletOptions): Manifold {
   const { radius, selection, segments = 16 } = options;
   
   if (radius <= 0) {
@@ -71,7 +72,7 @@ export function filletWithManifold(manifold: ManifoldToplevel, mf: Manifold, opt
     // Only handling convex edges (standard fillets)
     // Filter out flat edges (dihedral angle approx 0) which are just triangulation artifacts
     if (edge.dihedralAngle > 5 && edge.dihedralAngle < 175) {
-      const tool = createFilletCuttingTool(manifold, edge, radius, segments);
+      const tool = createFilletCuttingTool(Manifold, edge, radius, segments);
       if (tool && tool.volume() > 1e-9) {
         cuttingTools.push(tool);
       }
@@ -94,7 +95,7 @@ export function filletWithManifold(manifold: ManifoldToplevel, mf: Manifold, opt
  * Create a fillet cutting tool using the wedge-minus-tube approach.
  */
 function createFilletCuttingTool(
-  manifold: ManifoldToplevel,
+  Manifold: ManifoldStatic,
   edge: MeshEdge,
   radius: number,
   segments: number
@@ -126,9 +127,9 @@ function createFilletCuttingTool(
     z1 - n0z * radius - n1z * radius + edgeDir[2] * ext
   ];
   
-  const sphere0 = manifold.Manifold.sphere(radius, segments).translate(tubeStart);
-  const sphere1 = manifold.Manifold.sphere(radius, segments).translate(tubeEnd);
-  const tube = manifold.Manifold.hull([sphere0, sphere1]);
+  const sphere0 = Manifold.sphere(radius, segments).translate(tubeStart);
+  const sphere1 = Manifold.sphere(radius, segments).translate(tubeEnd);
+  const tube = Manifold.hull([sphere0, sphere1]);
 
   // 2. WEDGE: Triangular prism extending INWARD
   // CRITICAL: The wedge depth must be limited so it is completely contained
@@ -151,7 +152,7 @@ function createFilletCuttingTool(
   wedgePoints.push([eX - n0x * wedgeDepth, eY - n0y * wedgeDepth, eZ - n0z * wedgeDepth]);
   wedgePoints.push([eX - n1x * wedgeDepth, eY - n1y * wedgeDepth, eZ - n1z * wedgeDepth]);
   
-  const wedge = manifold.Manifold.hull(wedgePoints);
+  const wedge = Manifold.hull(wedgePoints);
 
   // 3. CUTTING TOOL: Wedge - Tube
   // Since wedge is small, wedge - tube leaves only the corner tip.

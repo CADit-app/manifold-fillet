@@ -6,7 +6,8 @@
  * when the tube is subtracted, leaves the fillet surface.
  */
 
-import type { Manifold, ManifoldToplevel } from 'manifold-3d';
+import type { Manifold } from 'manifold-3d';
+import type { ManifoldStatic } from './index';
 import { MeshEdge, edgeDirection } from './edgeSelection';
 
 /**
@@ -16,14 +17,14 @@ import { MeshEdge, edgeDirection } from './edgeSelection';
  * - Along the edge direction (with small extension)
  * - From the edge outward along both face normals
  * 
- * @param manifold - The initialized Manifold WASM module
+ * @param Manifold - The Manifold class with static constructors
  * @param edge The edge to build wedge for
  * @param distance How far to offset along face normals
  * @param inflate Extra inflation for boolean overlap (typically 2× precision)
  * @returns Manifold representing the wedge
  */
 export function buildWedge(
-  manifold: ManifoldToplevel,
+  Manifold: ManifoldStatic,
   edge: MeshEdge,
   distance: number,
   inflate: number = 0.001
@@ -101,7 +102,7 @@ export function buildWedge(
   // This guarantees a valid manifold
   const points = [s0, sA, sB, e0, eA, eB];
   
-  return manifold.Manifold.hull(points);
+  return Manifold.hull(points);
 }
 
 /**

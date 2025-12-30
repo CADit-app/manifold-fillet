@@ -4,19 +4,20 @@
  * smooth results with proper manifold topology.
  */
 
-import type { Manifold, ManifoldToplevel } from 'manifold-3d';
+import type { Manifold } from 'manifold-3d';
+import type { ManifoldStatic } from './index';
 
 /**
  * Creates a tube along a polyline path using convex hulls of spheres.
  * 
- * @param manifold - The initialized Manifold WASM module
+ * @param Manifold - The Manifold class with static constructors
  * @param path Array of 3D points defining the path
  * @param radius Radius of the tube
  * @param segments Optional circular segments for sphere quality
  * @returns Manifold representing the tube
  */
 export function pipeAlongPath(
-  manifold: ManifoldToplevel,
+  Manifold: ManifoldStatic,
   path: [number, number, number][],
   radius: number,
   segments?: number
@@ -30,7 +31,7 @@ export function pipeAlongPath(
   const spheres: Manifold[] = [];
   
   for (const [x, y, z] of path) {
-    const sphere = manifold.Manifold.sphere(radius, segments)
+    const sphere = Manifold.sphere(radius, segments)
       .translate([x, y, z]);
     spheres.push(sphere);
   }
@@ -40,7 +41,7 @@ export function pipeAlongPath(
   
   for (let i = 0; i < path.length - 1; i++) {
     // Hull two adjacent spheres to form a tube segment
-    const segment = manifold.Manifold.hull([spheres[i], spheres[i + 1]]);
+    const segment = Manifold.hull([spheres[i], spheres[i + 1]]);
     segments_.push(segment);
   }
   
@@ -49,21 +50,21 @@ export function pipeAlongPath(
     return segments_[0];
   }
   
-  return manifold.Manifold.union(segments_);
+  return Manifold.union(segments_);
 }
 
 /**
  * Creates a tube along an edge path that extends slightly beyond
  * the endpoints to ensure proper boolean overlap.
  * 
- * @param manifold - The initialized Manifold WASM module
+ * @param Manifold - The Manifold class with static constructors
  * @param path Path points
  * @param radius Tube radius  
  * @param extensionFactor How much to extend beyond endpoints (as fraction of radius)
  * @param segments Circular segments
  */
 export function pipeAlongPathExtended(
-  manifold: ManifoldToplevel,
+  Manifold: ManifoldStatic,
   path: [number, number, number][],
   radius: number,
   extensionFactor: number = 0.1,
@@ -99,7 +100,7 @@ export function pipeAlongPathExtended(
     [end[0] + endDir[0] * ext, end[1] + endDir[1] * ext, end[2] + endDir[2] * ext]
   ];
   
-  return pipeAlongPath(manifold, extendedPath, radius, segments);
+  return pipeAlongPath(Manifold, extendedPath, radius, segments);
 }
 
 function normalize(v: [number, number, number]): [number, number, number] {

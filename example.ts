@@ -1,18 +1,14 @@
 /**
- * Example usage of the fillet library in CADit environment.
+ * Example usage of the fillet library.
  * 
- * In CADit, `manifold` is available as a global variable containing
- * the initialized Manifold WASM module.
+ * Works on both manifoldcad.org and CADit.
  */
 import { Manifold } from 'manifold-3d/manifoldCAD';
-import type { Manifold as ManifoldType, ManifoldToplevel } from 'manifold-3d';
+import type { Manifold as ManifoldType } from 'manifold-3d';
 import { createFillet } from './index';
 
-// In CADit environment, 'manifold' is exposed as a global
-declare const manifold: ManifoldToplevel;
-
-// Create fillet API bound to the manifold instance
-const { fillet } = createFillet(manifold);
+// Create fillet API bound to the Manifold class
+const { fillet } = createFillet(Manifold);
 
 const box = Manifold.cube([20, 20, 20], true);
 
