@@ -1,6 +1,6 @@
 {
   "name": "@cadit-app/manifold-fillet",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Fillet and round operations for Manifold meshes",
   "type": "module",
   "main": "dist/index.js",
