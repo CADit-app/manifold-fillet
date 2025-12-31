@@ -12,8 +12,15 @@
       "isPrimary": true
     }
   ],
+  "examples": [
+    {
+      "name": "Example",
+      "path": "./dist/example.mjs",
+      "description": ""
+    }
+  ],
   "metadata": {
-    "createdAt": "2025-12-31T23:15:22.555Z",
+    "createdAt": "2025-12-31T23:15:52.378Z",
     "createdWith": "cadit-web",
     "designId": "fTfp9wgcM6O1NNU"
   }
