@@ -1,6 +1,6 @@
 {
   "name": "@cadit-app/manifold-fillet",
-  "version": "1.0.3",
+  "version": "1.0.0",
   "description": "Fillet and round operations for Manifold meshes",
   "type": "module",
   "main": "dist/index.js",
@@ -17,7 +17,7 @@
   },
   "scripts": {
     "build": "bash -c 'output=$(tsc --noCheck 2>&1); echo \"$output\"; echo \"$output\" | grep -v \"error TS2742\" | grep -q \"error TS\" && exit 1 || exit 0'",
-    "dev": "tsup src/index.ts --format cjs,esm --dts --watch",
+    "dev": "tsup src/index.ts src/example.ts --format cjs,esm --dts --watch",
     "lint": "eslint src",
     "build:3mf": "manifold-cad index.ts output.3mf",
     "build:glb": "manifold-cad index.ts output.glb"
